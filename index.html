@@ -1,99 +1,53 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>موقع حمود الخاص</title>
-
-<style>
-body{
-margin:0;
-font-family:Tahoma;
-color:white;
-text-align:center;
-background:linear-gradient(#020111,#000000);
-}
-
-/* النجوم */
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-background:url("https://www.transparenttextures.com/patterns/stardust.png");
-animation:move 120s linear infinite;
-z-index:-1;
-}
-
-@keyframes move{
-from{background-position:0 0;}
-to{background-position:10000px 5000px;}
-}
-
-.container{
-margin-top:60px;
-}
-
-.sound{
-background:rgba(255,255,255,0.08);
-padding:15px;
-margin:10px auto;
-width:260px;
-border-radius:10px;
-}
-
-button{
-background:#3a6df0;
-border:none;
-padding:8px 15px;
-color:white;
-border-radius:6px;
-cursor:pointer;
-margin-top:5px;
-}
-
-button:hover{
-background:#5a85ff;
-}
-
-audio{
-width:100%;
-margin-top:5px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <title>مكتبتي الصوتية</title>
+    <style>
+        body { background: #121212; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .audio-item { background: #222; padding: 15px; margin: 8px; border-radius: 8px; width: 100%; max-width: 400px; display: flex; justify-content: space-between; align-items: center; }
+        button { cursor: pointer; padding: 8px 15px; border-radius: 5px; border: none; margin: 2px; }
+        .play { background: #1DB954; color: white; }
+        .stop { background: #E91E63; color: white; }
+    </style>
 </head>
-
 <body>
 
-<div class="stars"></div>
+    <h1>قائمة الأصوات</h1>
+    <div id="playlist-container"></div>
 
-<div class="container">
-<h1>موقع حمود الخاص</h1>
+    <script>
+        // هنا فقط ضيف أسماء ملفاتك (تأكد أن الملفات في مجلد audio)
+        const myAudios = [
+            { name: "صوت الطبيعة", file: "sound1.mp3" },
+            { name: "صوت عاصفة", file: "sound2.mp3" },
+            { name: "صوت طيور", file: "sound3.mp3" },
+            { name: "صوت مطر", file: "sound4.mp3" }
+            // تقدر تضيف أي عدد تبيه هنا بنفس الطريقة
+        ];
 
-<div id="sounds"></div>
+        const container = document.getElementById('playlist-container');
+        let currentAudio = null;
 
-</div>
+        myAudios.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'audio-item';
+            div.innerHTML = `
+                <span>${item.name}</span>
+                <div>
+                    <button class="play" onclick="play('${item.file}')">▶</button>
+                    <button class="stop" onclick="stop()">■</button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
 
-<script src="sounds.js"></script>
-
-<script>
-
-const container = document.getElementById("sounds");
-
-sounds.forEach((link,i)=>{
-
-const div=document.createElement("div");
-div.className="sound";
-
-div.innerHTML=`
-<p>الصوت ${i+1}</p>
-<audio controls src="${link}"></audio>
-`;
-
-container.appendChild(div);
-
-});
-
-</script>
-
+        const player = new Audio();
+        function play(file) {
+            player.src = "audio/" + file;
+            player.play();
+        }
+        function stop() { player.pause(); player.currentTime = 0; }
+    </script>
 </body>
 </html>
