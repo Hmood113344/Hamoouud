@@ -17,19 +17,16 @@
     <div id="playlist-container"></div>
 
     <script>
-        // هنا فقط ضيف أسماء ملفاتك (تأكد أن الملفات في مجلد audio)
+        // هنا تضيف ملفاتك الموجودة في مجلد audio
+        // تأكد أن اسم الملف هنا يطابق اسم الملف في GitHub تماماً
         const myAudios = [
-            { name: "صوت الطبيعة", file: "sound1.mp3" },
-            { name: "صوت عاصفة", file: "sound2.mp3" },
-            { name: "صوت طيور", file: "sound3.mp3" },
-            { name: "صوت مطر", file: "sound4.mp3" }
-            // تقدر تضيف أي عدد تبيه هنا بنفس الطريقة
+            { name: "تابعنا سناب", file: "snap.mp3" } 
         ];
 
         const container = document.getElementById('playlist-container');
-        let currentAudio = null;
+        const player = new Audio();
 
-        myAudios.forEach((item, index) => {
+        myAudios.forEach((item) => {
             const div = document.createElement('div');
             div.className = 'audio-item';
             div.innerHTML = `
@@ -42,9 +39,8 @@
             container.appendChild(div);
         });
 
-        const player = new Audio();
-        function play(file) {
-            player.src = "audio/" + file;
+        function play(fileName) {
+            player.src = "audio/" + fileName;
             player.play();
         }
         function stop() { player.pause(); player.currentTime = 0; }
